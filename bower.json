@@ -1,0 +1,7 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "zeptojs": "~1.1.6"
+  }
+}
