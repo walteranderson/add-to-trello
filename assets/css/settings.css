@@ -1,0 +1,11 @@
+.auth-loading {
+    color: black;
+}
+
+.auth-loading img {
+    margin-bottom: 15px;
+}
+
+.success-body {
+    margin-top: 15px;
+}

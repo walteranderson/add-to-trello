@@ -5,11 +5,17 @@
     "version": "1.0",
     "browser_action": {
         "default_icon": "assets/icon.png",
-        "default_popup": "index.html",
+        "default_popup": "popup.html",
         "default_title": "Add Cards to Trello"
     },
     "permissions": [
         "tabs",
-        "https://ajax.googleapis.com/"
-    ]
+        "https://api.trello.com/"
+    ],
+    "web_accessible_resources": [
+        "settings.html"
+    ],
+    "background": {
+        "scripts": ["assets/js/background.js"]
+    }
 }

@@ -1,0 +1,31 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="assets/css/popup.css">
+
+    <!-- Scripts -->
+    <script src="libs/jquery/dist/jquery.min.js"></script>
+    <script src="libs/trello_client.js"></script>
+    <script src="assets/js/key.js"></script>
+    <script src="assets/js/functions.js"></script>
+    <script src="assets/js/popup.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            You are logged in!
+
+            <button class="btn btn-primary" id="logout">Logout</button>
+        </div>
+    </div>
+</body>
+</html>
+

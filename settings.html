@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="assets/css/settings.css">
+
+    <!-- Scripts -->
+    <script src="libs/jquery/dist/jquery.min.js"></script>
+    <script src="libs/trello_client.js"></script>
+    <script src="assets/js/key.js"></script>
+    <script src="assets/js/functions.js"></script>
+    <script src="assets/js/settings.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>Settings</h1>
+
+            <div id="auth" class="auth-loading">
+                <img src="assets/ajax-loader.gif" class="center-block"/>
+                <div class="text-center lead">Checking authorization</div>
+            </div>
+
+            <!-- Authorize Success -->
+            <div id="success" class="hide">
+                <div class="success-body">
+                    <div class="alert alert-success">
+                        Congratulations! You have successfully authorized
+                        Trello Add Cards
+                    </div>
+                </div>
+            </div>
+
+            <!-- Authorize Error -->
+            <div id="error" class="hide">
+                <h2>Error</h2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

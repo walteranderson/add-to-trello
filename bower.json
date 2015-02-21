@@ -2,6 +2,6 @@
   "name": "my-project",
   "version": "1.0.0",
   "dependencies": {
-    "zeptojs": "~1.1.6"
+    "jquery": "~2.1.3"
   }
 }
