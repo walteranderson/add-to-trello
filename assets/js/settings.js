@@ -1,6 +1,5 @@
 $(function() {
-
-    authorize(function() {
+    api.authorize(function() {
         // success
         $('#auth').addClass('hide');
         $('#success').removeClass('hide');

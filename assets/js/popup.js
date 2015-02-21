@@ -1,25 +1,23 @@
-$(document).ready(function() {
+$(function() {
     if (!localStorage.trello_token) {
         showSettings();
         return;
     }
 
+    // Deauthorize Trello
     $('#logout').click(function() {
-        deauthorize();
+        api.deauthorize();
     });
 
-    $('#submit').click(function() {
-        // add the selected board and list to localStorage
+    // Change list dropdown when the user changes the board
+    $('.js-boards').change(changeList);
 
+    // Add the new card
+    $('#submit').click(function() {
         var data = [];
         $(".add-card-form").serializeArray().map(function(x){data[x.name] = x.value;});
-        // submit the card
-        submitCard(data);
-    });
 
-    $('.js-boards').change(function() {
-        // change the lists based on which board is selected
-        changeList($(this).val());
+        api.submitCard(data);
     });
 
     // get the current tab info and insert into the form
@@ -29,21 +27,8 @@ $(document).ready(function() {
     });
 
     // hit API to get boards and insert into the add form
-    getBoards(loadBoardsAndLists);
+    api.getBoards(loadBoardsAndLists);
 });
-
-function trelloInit() {
-    Trello.setKey(APP_KEY);
-    Trello.setToken(localStorage.getItem('trello_token'));
-}
-
-function getBoards(callback) {
-    trelloInit();
-    Trello.rest('GET', 'members/me/boards', { filter: 'open', lists: 'open' }, function(boards) {
-        localStorage.setItem('trello_boards', JSON.stringify(boards));
-        callback();
-    }, apiError);
-}
 
 function loadBoardsAndLists() {
     var boards   = JSON.parse(localStorage.getItem('trello_boards'));
@@ -73,9 +58,10 @@ function loadBoardsAndLists() {
     });
 }
 
-function changeList(id) {
+function changeList() {
+    var id     = $(this).val();
     var boards = JSON.parse(localStorage.getItem('trello_boards'));
-    var lists = $.grep(boards, function(e){ return e.id === id; })[0].lists;
+    var lists  = $.grep(boards, function(e){ return e.id === id; })[0].lists;
 
     // clear the lists dropdown
     $('.js-lists').html('');
@@ -87,11 +73,6 @@ function changeList(id) {
         // append the list
         $('.js-lists').append(createOption(list, listSelected));
     });
-}
-
-function apiError(message) {
-    // TODO - handle api errors here
-    console.log(message);
 }
 
 function getCurrentTab(callback) {
@@ -127,18 +108,4 @@ function setDefaults(boards) {
     }));
 
     return JSON.parse(localStorage.getItem('select_defaults'));
-}
-
-function submitCard(data) {
-    trelloInit();
-    Trello.rest('POST', 'cards', {
-        name: data['card-title'],
-        desc: data['card-description'],
-        date: null,
-        idList: data['lists'],
-        urlSource: null
-    }, function(success) {
-        console.log(success);
-        window.close();
-    }, apiError);
 }
