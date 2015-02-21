@@ -17,6 +17,8 @@ $(function() {
         var data = [];
         $(".add-card-form").serializeArray().map(function(x){data[x.name] = x.value;});
 
+        storage.setDefaults(data['board'], data['list']);
+
         api.submitCard(data);
     });
 
@@ -31,12 +33,12 @@ $(function() {
 });
 
 function loadBoardsAndLists() {
-    var boards   = JSON.parse(localStorage.getItem('trello_boards'));
-    var defaults = JSON.parse(localStorage.getItem('select_defaults'));
+    var boards   = storage.getBoards();
+    var defaults = storage.getDefaults();
 
     // set the defaults to first board and first list if none present
     if (!defaults) {
-        defaults = setDefaults(boards);
+        defaults = storage.resetDefaults();
     }
 
     $.each(boards, function(key, board) {
@@ -60,7 +62,7 @@ function loadBoardsAndLists() {
 
 function changeList() {
     var id     = $(this).val();
-    var boards = JSON.parse(localStorage.getItem('trello_boards'));
+    var boards = storage.getBoards();
     var lists  = $.grep(boards, function(e){ return e.id === id; })[0].lists;
 
     // clear the lists dropdown
@@ -99,13 +101,4 @@ function createOption(data, isSelected) {
     }
 
     return option;
-}
-
-function setDefaults(boards) {
-    localStorage.setItem('select_defaults', JSON.stringify({
-        board_id: boards[0].id,
-        list_id: boards[0].lists[0].id
-    }));
-
-    return JSON.parse(localStorage.getItem('select_defaults'));
 }

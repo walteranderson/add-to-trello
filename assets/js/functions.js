@@ -7,6 +7,75 @@ function clearData() {
     localStorage.removeItem('select_defaults');
 }
 
+var storage = (function() {
+    'use strict';
+
+    /**
+     * clear stored data
+     */
+    var clearData = function() {
+        localStorage.removeItem('trello_boards');
+        localStorage.removeItem('select_defaults');
+    };
+
+    /**
+     * reset the default options to be the first board and first list
+     */
+    var resetDefaults = function() {
+        var boards = getBoards();
+
+        localStorage.setItem('select_defaults', JSON.stringify({
+            board_id: boards[0].id,
+            list_id: boards[0].lists[0].id
+        }));
+
+        return getDefaults();
+    };
+
+    /**
+     * set default options
+     */
+    var setDefaults = function(boardId, listId) {
+        localStorage.setItem('select_defaults', JSON.stringify({
+            board_id: boardId,
+            list_id: listId
+        }));
+    };
+
+    /**
+     * retrieve default options
+     */
+    var getDefaults = function() {
+        return JSON.parse(localStorage.getItem('select_defaults'));
+    };
+
+    /**
+     * retrieve boards
+     */
+    var getBoards = function() {
+        return JSON.parse(localStorage.getItem('trello_boards'));
+    };
+
+    /**
+     * set boards
+     */
+    var setBoards = function(boards) {
+        localStorage.setItem('trello_boards', JSON.stringify(boards));
+    };
+
+    /**
+     * Public API
+     */
+    return {
+        getBoards: getBoards,
+        setBoards: setBoards,
+        getDefaults: getDefaults,
+        setDefaults: setDefaults,
+        resetDefaults: resetDefaults,
+        clearData: clearData
+    }
+}());
+
 /**
  * api module for interacting with the Trello API
  *
@@ -30,7 +99,7 @@ var api = (function() {
      */
     var getBoards = function(callback) {
         Trello.rest('GET', 'members/me/boards', { filter: 'open', lists: 'open' }, function(boards) {
-            localStorage.setItem('trello_boards', JSON.stringify(boards));
+            storage.setBoards(boards);
             callback();
         }, _apiError);
     };
@@ -45,10 +114,10 @@ var api = (function() {
             name: data['card-title'],
             desc: data['card-description'],
             date: null,
-            idList: data['lists'],
+            idList: data['list'],
             urlSource: null
         }, function(success) {
-            console.log(success);
+            // close the window on success
             window.close();
         }, _apiError);
     };
