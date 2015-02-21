@@ -1,18 +1,3 @@
-function getCurrentTab(callback) {
-    // Query filter to be passed to chrome.tabs.query - see
-    // https://developer.chrome.com/extensions/tabs#method-query
-    var queryInfo = {
-        active: true,
-        currentWindow: true
-    };
-
-    chrome.tabs.query(queryInfo, function(tabs) {
-        var tab = tabs[0];
-
-        callback(tab);
-    });
-}
-
 function showSettings() {
     chrome.tabs.create({url: chrome.extension.getURL('settings.html')});
 }
@@ -22,6 +7,7 @@ function authorize(success, error) {
     Trello.authorize({
         name: 'Trello Add Cards',
         expiration: 'never',
+        scope: { read: true, write: true, account: false },
         success: success,
         error: error
     });
@@ -29,5 +15,11 @@ function authorize(success, error) {
 
 function deauthorize() {
     Trello.deauthorize();
+    clearData();
     showSettings();
+}
+
+function clearData() {
+    localStorage.removeItem('trello_boards');
+    localStorage.removeItem('select_defaults');
 }

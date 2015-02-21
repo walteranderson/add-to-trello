@@ -21,9 +21,36 @@
 <body>
     <div class="container">
         <div class="row">
-            You are logged in!
+            <form class="add-card-form">
+                <div class="form-group">
+                    <label for="card-title">Card Title</label>
+                    <input type="text" name="card-title" class="form-control js-card-title">
+                </div>
 
-            <button class="btn btn-primary" id="logout">Logout</button>
+                <div class="form-group">
+                    <label for="card-description">Card Description</label>
+                    <textarea
+                        name="card-description"
+                        class="form-control js-card-description"
+                        rows="5"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="boards">Boards</label>
+                    <select name="boards" class="form-control js-boards"></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="lists">Lists</label>
+                    <select name="lists" class="form-control js-lists"></select>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" id="submit" class="btn btn-primary">Add Card</button>
+                </div>
+            </form>
+
+            <a href="javascript:void(0)" id="logout" style="float:right">Logout</a>
         </div>
     </div>
 </body>
