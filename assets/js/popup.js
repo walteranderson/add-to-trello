@@ -1,35 +1,12 @@
 $(function() {
-    if (!localStorage.trello_token) {
+    // if not logged in, redirect to settings page
+    if (!api.isAuthorized()) {
         showSettings();
         return;
     }
 
-    // open up Trello.com
-    $('.js-trello-link').click(function() {
-        chrome.tabs.create({ url: 'https://trello.com' });
-    });
-
-    $('.js-open-settings').click(function() {
-        showSettings();
-    });
-
-    // Deauthorize Trello
-    $('.js-logout').click(function() {
-        api.deauthorize();
-    });
-
-    // Change list dropdown when the user changes the board
-    $('.js-boards').change(changeList);
-
-    // Add the new card
-    $('.js-submit').click(function() {
-        var data = [];
-        $(".add-card-form").serializeArray().map(function(x){data[x.name] = x.value;});
-
-        storage.setDefaults(data['board'], data['list']);
-
-        api.submitCard(data);
-    });
+    // initially load the boards from memory
+    loadBoardsAndLists();
 
     // get the current tab info and insert into the form
     getCurrentTab(function(tab) {
@@ -39,11 +16,48 @@ $(function() {
 
     // hit API to get boards and insert into the add form
     api.getBoards(loadBoardsAndLists);
+
+
+    // ------------------------------
+    // Click Events
+    // ------------------------------
+
+    // open up Trello.com
+    $('.js-trello-link').click(openTrello);
+
+    // open settings page
+    $('.js-open-settings').click(showSettings);
+
+    // Deauthorize Trello
+    $('.js-logout').click(api.deauthorize);
+
+    // Change list dropdown when the user changes the board
+    $('.js-boards').change(changeList);
+
+    // Add the new card
+    $('.js-submit').click(function() {
+        var data = [];
+        $(".add-card-form").serializeArray().map(function(x){data[x.name] = x.value;});
+
+        // set the default dropdowns to what was selected
+        storage.setDefaults(data['board'], data['list']);
+
+        api.submitCard(data);
+    });
 });
 
+
+/**
+ * loadBoardsAndLists
+ * pulls data from localStorage and inserts the board and list dropdowns
+ *
+ */
 function loadBoardsAndLists() {
     var boards   = storage.getBoards();
     var defaults = storage.getDefaults();
+
+    // if we don't have any boards in localStorage, wait for the http request
+    if (!boards) return;
 
     // set the defaults to first board and first list if none present
     if (!defaults) {
@@ -69,6 +83,11 @@ function loadBoardsAndLists() {
     });
 }
 
+/**
+ * changeList
+ * updates the list dropdown based on the selected board
+ *
+ */
 function changeList() {
     var id     = $(this).val();
     var boards = storage.getBoards();
@@ -86,9 +105,12 @@ function changeList() {
     });
 }
 
+/**
+ * getCurrentTab
+ * retrieves the current tab information from chrome
+ *
+ */
 function getCurrentTab(callback) {
-    // Query filter to be passed to chrome.tabs.query - see
-    // https://developer.chrome.com/extensions/tabs#method-query
     var queryInfo = {
         active: true,
         currentWindow: true
@@ -101,6 +123,11 @@ function getCurrentTab(callback) {
     });
 }
 
+/**
+ * createOption
+ * creates generic html <option> tag based on the parameters
+ *
+ */
 function createOption(data, isSelected) {
     var option = $('<option>', { value: data.id })
         .text(data.name);

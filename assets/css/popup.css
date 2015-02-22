@@ -16,6 +16,10 @@ body {
     float: right;
 }
 
+.trello-link {
+    height: 30px;
+}
+
 .trello-logo {
     cursor: pointer;
     width: 75px;
@@ -41,4 +45,8 @@ body {
 input, textarea, select {
     box-shadow: 0 1px 2px rgba(0,0,0,.23)!important;
     border: 0 !important;
+}
+
+.clear-button {
+    float: right;
 }

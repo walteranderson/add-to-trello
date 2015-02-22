@@ -2,11 +2,13 @@ function showSettings() {
     chrome.tabs.create({url: chrome.extension.getURL('settings.html')});
 }
 
-function clearData() {
-    localStorage.removeItem('trello_boards');
-    localStorage.removeItem('select_defaults');
+function openTrello() {
+    chrome.tabs.create({ url: 'https://trello.com' });
 }
 
+/**
+ * local storage module for caching trello data
+ */
 var storage = (function() {
     'use strict';
 
@@ -128,7 +130,6 @@ var api = (function() {
      *
      */
     var authorize = function(success, error) {
-        Trello.setKey(APP_KEY);
         Trello.authorize({
             name: 'Add to Trello',
             expiration: 'never',
@@ -145,9 +146,17 @@ var api = (function() {
      */
     var deauthorize = function() {
         Trello.deauthorize();
-        clearData();
+        storage.clearData();
         showSettings();
     };
+
+    /**
+     * returns true if trello_token is stored in localStorage
+     * false otherwise
+     */
+    var isAuthorized = function() {
+        return localStorage.getItem('trello_token') ? true : false;
+    }
 
     /**
      * ready
@@ -166,6 +175,7 @@ var api = (function() {
      */
     return {
         ready: ready,
+        isAuthorized: isAuthorized,
         authorize: authorize,
         deauthorize: deauthorize,
         getBoards: getBoards,
