@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
-    "name": "Trello Add Cards",
-    "description": "Add cards to your Trello boards easily",
+    "name": "Add to Trello",
+    "description": "Add cards to your Trello boards from your browser",
     "version": "0.1",
     "browser_action": {
         "default_icon": "assets/icon.png",
@@ -14,8 +14,5 @@
     ],
     "web_accessible_resources": [
         "settings.html"
-    ],
-    "background": {
-        "scripts": ["assets/js/background.js"]
-    }
+    ]
 }

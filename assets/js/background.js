@@ -1,3 +1,0 @@
-$(function() {
-    // background javascript function
-});

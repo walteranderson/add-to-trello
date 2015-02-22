@@ -130,7 +130,7 @@ var api = (function() {
     var authorize = function(success, error) {
         Trello.setKey(APP_KEY);
         Trello.authorize({
-            name: 'Trello Add Cards',
+            name: 'Add to Trello',
             expiration: 'never',
             scope: { read: true, write: true, account: false },
             success: success,

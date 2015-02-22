@@ -21,10 +21,15 @@
 <body>
     <div class="container">
         <div class="row">
+
+            <div class="trello-link">
+                <img src="assets/trello-logo-blue.png" class="center-block trello-logo js-trello-link">
+            </div>
+
             <form class="add-card-form">
                 <div class="form-group">
                     <label for="card-title">Card Title</label>
-                    <input type="text" name="card-title" class="form-control js-card-title">
+                    <input type="text" name="card-title" class="form-control js-card-title" autofocus>
                 </div>
 
                 <div class="form-group">
@@ -46,11 +51,14 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="button" id="submit" class="btn btn-primary">Add Card</button>
+                    <button type="button" class="btn add-button js-submit">Add</button>
                 </div>
             </form>
 
-            <a href="javascript:void(0)" id="logout" style="float:right">Logout</a>
+            <div class="options-list">
+                <a href="javascript:void(0)" class="js-open-settings settings-link">Settings</a>
+                <a href="javascript:void(0)" class="js-logout logout-link">Logout</a>
+            </div>
         </div>
     </div>
 </body>

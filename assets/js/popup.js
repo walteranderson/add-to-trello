@@ -4,8 +4,17 @@ $(function() {
         return;
     }
 
+    // open up Trello.com
+    $('.js-trello-link').click(function() {
+        chrome.tabs.create({ url: 'https://trello.com' });
+    });
+
+    $('.js-open-settings').click(function() {
+        showSettings();
+    });
+
     // Deauthorize Trello
-    $('#logout').click(function() {
+    $('.js-logout').click(function() {
         api.deauthorize();
     });
 
@@ -13,7 +22,7 @@ $(function() {
     $('.js-boards').change(changeList);
 
     // Add the new card
-    $('#submit').click(function() {
+    $('.js-submit').click(function() {
         var data = [];
         $(".add-card-form").serializeArray().map(function(x){data[x.name] = x.value;});
 
