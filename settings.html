@@ -3,7 +3,6 @@
 <head>
     <title></title>
     <link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/index.css">
     <link rel="stylesheet" href="assets/css/settings.css">
 
     <!-- Scripts -->
@@ -14,9 +13,17 @@
     <script src="assets/js/settings.js"></script>
 </head>
 <body>
+    <!-- Header -->
+    <div class="jumbotron logo-container">
+        <div class="centered">
+            <span class="pre-logo">Add to</span>
+            <img src="assets/trello-logo-large.png" class="logo">
+        </div>
+    </div>
+
     <div class="container">
+        <!-- Authentication Notifications -->
         <div class="row">
-            <h1>Settings</h1>
 
             <div id="auth" class="auth-loading">
                 <img src="assets/ajax-loader.gif" class="center-block"/>
@@ -38,6 +45,33 @@
                 <h2>Uh oh</h2>
                 It looks like something went wrong when trying to authorize
                 with Trello. Check your internet connection and try again.
+            </div>
+        </div>
+
+        <!-- Links -->
+        <div class="row">
+            <div class="col-md-4">
+                <h2 class="lead text-center">Leave a Review</h2>
+
+                <div class="text-center">
+                    <a href="#">Review in the Chrome Webstore</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h2 class="lead text-center">Have a Suggestion?</h2>
+
+                <div class="text-center">
+                    Have any suggestions, or just like the chrome extension?
+                    <a href="mailto:walteranderson19@gmail.com">Send me an email</a>.
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h2 class="lead text-center">Follow on Github</h2>
+
+                <div class="text-center">
+                    Submit issues, pull requests, or just follow the development
+                    on <a href="https://github.com/walteranderson/add-to-trello">Github</a>.
+                </div>
             </div>
         </div>
     </div>

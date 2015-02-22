@@ -1,3 +1,27 @@
+/*.logo-container {
+    background-color: #f0f0f0;
+    height: 200px;
+}*/
+
+.logo-container .centered {
+    float: none;
+    margin: 0 auto;
+    width: 50%;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pre-logo {
+    font-size: 40px;
+    line-height: 1;
+    font-weight: 200;
+    margin: -13px;
+}
+
+.logo {
+    width: 350px;
+}
+
 .auth-loading {
     color: black;
 }
