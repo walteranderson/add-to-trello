@@ -64,6 +64,9 @@ function loadBoardsAndLists() {
         defaults = storage.resetDefaults();
     }
 
+    $('.js-boards').html('');
+    $('.js-lists').html('');
+
     $.each(boards, function(key, board) {
         var boardSelected = false;
         if (defaults.board_id == board.id) boardSelected = true;
