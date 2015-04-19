@@ -31,7 +31,7 @@
             </div>
 
             <!-- Authorize Success -->
-            <div id="success" class="hide">
+            <div id="success" class="hidden">
                 <div class="success-body">
                     <div class="alert alert-success">
                         Congratulations! You have successfully authorized
@@ -41,7 +41,7 @@
             </div>
 
             <!-- Authorize Error -->
-            <div id="error" class="hide">
+            <div id="error" class="hidden">
                 <h2>Uh oh</h2>
                 It looks like something went wrong when trying to authorize
                 with Trello. Check your internet connection and try again.
@@ -49,42 +49,48 @@
         </div>
 
         <!-- Settings -->
-        <div id="settings" class="hide row">
+        <div id="settings" class="hidden row">
             <div class="lead">Settings</div>
             <form class="js-settings-form col-md-4">
                 <!-- Card Title -->
                 <div class="form-group">
-                    <label for="title">Card Title</label>
+                    <label for="title">Card Title Default</label>
                     <select class="form-control" name="title">
-                        <option value="page">Current Page Title</option>
                         <option value="empty">Leave Blank</option>
+                        <option value="page">Current Page Title</option>
                     </select>
                 </div>
 
                 <!-- Card Description -->
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">Description Default</label>
                     <select class="form-control" name="description">
                         <option value="empty">Leave Blank</option>
                         <option value="url">Current Page Url</option>
                     </select>
                 </div>
 
-                <!-- Boards -->
+                <!-- Board & List Defaults -->
                 <div class="form-group">
-                    <label for="board">Board</label>
-                    <select class="form-control" name="board">
-                        <option value="last-saved">Use Last Saved</option>
+                    <label for="boardList">Board &amp; List Defaults</label>
+                    <select class="form-control js-board-list" name="boardList">
+                        <option value="last-used">Last Used</option>
+                        <option value="choose">Choose Defaults</option>
                     </select>
                 </div>
 
-                <!-- Lists -->
-                <div class="form-group">
-                    <label for="list">List</label>
-                    <select class="form-control" name="list">
-                        <option value="last-saved">Use Last Saved</option>
+                <div class="form-group board-dropdown hidden">
+                    <label for="board">Boards</label>
+                    <select class="form-control js-boards" name="board">
                     </select>
                 </div>
+
+                <div class="form-group list-dropdown hidden">
+                    <label for="list">Lists</label>
+                    <select class="form-control js-lists" name="list">
+                    </select>
+                </div>
+
 
             </form>
         </div>

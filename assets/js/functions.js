@@ -28,8 +28,7 @@ var storage = (function() {
     var defaultSettings = {
         title: 'page',
         description: 'url',
-        board: 'last-saved',
-        list: 'last-saved'
+        boardList: 'last-used'
     };
 
     /**

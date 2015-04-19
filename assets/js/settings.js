@@ -14,15 +14,28 @@ $(function() {
         storage.setSettings(form);
     });
 
+
+    $('.js-board-list').change(function() {
+        var selected = $(this).val();
+
+        if (selected == 'choose') {
+            $('.board-dropdown').removeClass('hidden');
+            $('.list-dropdown').removeClass('hidden');
+        } else {
+            $('.board-dropdown').addClass('hidden');
+            $('.list-dropdown').addClass('hidden');
+        }
+    });
+
 });
 
 /**
  * on authorization success
  */
 function onSuccess() {
-    $('#auth').addClass('hide');
-    $('#success').removeClass('hide');
-    $('#settings').removeClass('hide');
+    $('#auth').addClass('hidden');
+    $('#success').removeClass('hidden');
+    $('#settings').removeClass('hidden');
     initSettings();
 }
 
@@ -30,9 +43,9 @@ function onSuccess() {
  * on authorization failure
  */
 function onError() {
-    $('#auth').addClass('hide');
-    $('#error').removeClass('hide');
-    $('#settings').addClass('hide');
+    $('#auth').addClass('hidden');
+    $('#error').removeClass('hidden');
+    $('#settings').addClass('hidden');
 }
 
 /**
