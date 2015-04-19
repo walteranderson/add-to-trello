@@ -15,7 +15,7 @@ $(function() {
     initForms();
 
     // hit API to get boards and insert into the add form
-    api.getBoards(loadBoardsAndLists);
+    api.getOrgsAndBoards(loadBoardsAndLists);
 
 
 // ---------- Events ---------- //
@@ -51,7 +51,31 @@ $(function() {
  *
  */
 function loadBoardsAndLists() {
-    var boards   = storage.getBoards();
+    var orgs     = storage.getOrgs();
+    var defaults = storage.getDefaults();
+
+    // if we don't have any data in localStorage, wait for the http request
+    if (!orgs) return;
+
+    // set the defaults to first board and first list if none present
+    if (!defaults) {
+        defaults = storage.resetDefaults();
+    }
+
+    $('.js-boards').html('');
+    $('.js-lists').html('');
+
+    $.each(orgs, function(key, org) {
+        // append the option group
+        $('.js-boards').append(createOptionGroup(org, defaults));
+    });
+
+
+
+
+
+
+/*    var boards   = storage.getBoards();
     var defaults = storage.getDefaults();
 
     // if we don't have any boards in localStorage, wait for the http request
@@ -81,7 +105,7 @@ function loadBoardsAndLists() {
                 $('.js-lists').append(createOption(list, listSelected));
             });
         }
-    });
+    });*/
 }
 
 /**
@@ -90,9 +114,16 @@ function loadBoardsAndLists() {
  *
  */
 function changeList() {
-    var id     = $(this).val();
-    var boards = storage.getBoards();
-    var lists  = $.grep(boards, function(e){ return e.id === id; })[0].lists;
+    var id   = $(this).val();
+    var orgs = storage.getOrgs();
+    var lists = {};
+
+    // search through the organzations and find the board that was selected
+    $.each(orgs, function(key, org) {
+        var board = $.grep(org.boards, function(e){ return e.id === id; })[0];
+        if (board) { lists = board.lists; }
+    });
+
 
     // clear the lists dropdown
     $('.js-lists').html('');
@@ -122,6 +153,39 @@ function getCurrentTab(callback) {
 
         callback(tab);
     });
+}
+
+/**
+ * creates an optgroup for the boards dropdown
+ */
+function createOptionGroup(org, defaults) {
+    var optGroup = $('<optgroup>', { label: org.name });
+
+    // loop through each board
+    $.each(org.boards, function(key, board) {
+        var boardSelected = false;
+        if (defaults.board_id == board.id) boardSelected = true;
+
+        // create the board option
+        var option = createOption(board, boardSelected);
+
+        // append the board to it's option group
+        optGroup.append(option);
+
+
+        if (boardSelected) {
+            // loop through this board's lists
+            $.each(board.lists, function(key, list) {
+                var listSelected = false;
+                if (defaults.list_id == list.id) listSelected = true;
+
+                // append the list
+                $('.js-lists').append(createOption(list, listSelected));
+            });
+        }
+    });
+
+    return optGroup;
 }
 
 /**

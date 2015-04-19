@@ -35,7 +35,7 @@ var storage = (function() {
      * clear stored data
      */
     var clearData = function() {
-        localStorage.removeItem('trello_boards');
+        localStorage.removeItem('trello_orgs');
         localStorage.removeItem('select_defaults');
         localStorage.removeItem('settings');
     };
@@ -44,11 +44,13 @@ var storage = (function() {
      * reset the default options to be the first board and first list
      */
     var resetDefaults = function() {
-        var boards = getBoards();
+        var orgs  = getOrgs();
+        var board = orgs.me.boards[0];
+        var list  = board.lists[0];
 
         localStorage.setItem('select_defaults', JSON.stringify({
-            board_id: boards[0].id,
-            list_id: boards[0].lists[0].id
+            board_id: board.id,
+            list_id: list.id
         }));
 
         return getDefaults();
@@ -72,19 +74,22 @@ var storage = (function() {
     };
 
     /**
-     * retrieve boards
+     * retrieve organizations and boards and lists
      */
-    var getBoards = function() {
-        return JSON.parse(localStorage.getItem('trello_boards'));
+    var getOrgs = function() {
+        return JSON.parse(localStorage.getItem('trello_orgs'));
     };
 
     /**
-     * set boards
+     * set organizations and boards and lists
      */
-    var setBoards = function(boards) {
-        localStorage.setItem('trello_boards', JSON.stringify(boards));
+    var setOrgs = function(orgs) {
+        localStorage.setItem('trello_orgs', JSON.stringify(orgs));
     };
 
+    /**
+     * get settings
+     */
     var getSettings = function() {
         var settings = JSON.parse(localStorage.getItem('settings'));
         if (!settings) {
@@ -96,6 +101,9 @@ var storage = (function() {
         return settings;
     };
 
+    /**
+     * set settings
+     */
     var setSettings = function(settings) {
         localStorage.setItem('settings', JSON.stringify(settings));
     };
@@ -104,8 +112,8 @@ var storage = (function() {
      * Public API
      */
     return {
-        getBoards: getBoards,
-        setBoards: setBoards,
+        getOrgs: getOrgs,
+        setOrgs: setOrgs,
 
         getDefaults: getDefaults,
         setDefaults: setDefaults,
@@ -135,14 +143,48 @@ var api = (function() {
     };
 
     /**
+     * get organizations and boards, then index them into an object we can
+     * save into localStorage
+     */
+    var getOrgsAndBoards = function(callback) {
+        var orgList = {
+            me: { name: 'Boards', boards: [] }
+        };
+
+        getOrgs(function(orgs) {
+            $.each(orgs, function(key, org) {
+                orgList[org.id] = {
+                    name: org.displayName,
+                    boards: []
+                };
+            });
+
+            getBoards(function(boards) {
+                $.each(boards, function(key, board) {
+                    // add board to either it's organization or the 'me' catchall
+                    orgList[board.idOrganization || 'me'].boards.push(board);
+                });
+
+                storage.setOrgs(orgList);
+                callback();
+            });
+        });
+    };
+
+    /**
      * getBoards
      * call Trello API to get the user's boards and associated lists
      *
      */
     var getBoards = function(callback) {
         Trello.rest('GET', 'members/me/boards', { filter: 'open', lists: 'open' }, function(boards) {
-            storage.setBoards(boards);
-            callback();
+            callback(boards);
+        }, _apiError);
+    };
+
+    var getOrgs = function(callback) {
+        Trello.rest('GET', 'members/me/organizations', function(orgs) {
+            callback(orgs);
         }, _apiError);
     };
 
@@ -218,7 +260,9 @@ var api = (function() {
         isAuthorized: isAuthorized,
         authorize: authorize,
         deauthorize: deauthorize,
+        getOrgsAndBoards: getOrgsAndBoards,
         getBoards: getBoards,
+        getOrgs: getOrgs,
         submitCard: submitCard
     }
 }());
