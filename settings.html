@@ -48,6 +48,47 @@
             </div>
         </div>
 
+        <!-- Settings -->
+        <div id="settings" class="hide row">
+            <div class="lead">Settings</div>
+            <form class="js-settings-form col-md-4">
+                <!-- Card Title -->
+                <div class="form-group">
+                    <label for="title">Card Title</label>
+                    <select class="form-control" name="title">
+                        <option value="page">Current Page Title</option>
+                        <option value="empty">Leave Blank</option>
+                    </select>
+                </div>
+
+                <!-- Card Description -->
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <select class="form-control" name="description">
+                        <option value="empty">Leave Blank</option>
+                        <option value="url">Current Page Url</option>
+                    </select>
+                </div>
+
+                <!-- Boards -->
+                <div class="form-group">
+                    <label for="board">Board</label>
+                    <select class="form-control" name="board">
+                        <option value="last-saved">Use Last Saved</option>
+                    </select>
+                </div>
+
+                <!-- Lists -->
+                <div class="form-group">
+                    <label for="list">List</label>
+                    <select class="form-control" name="list">
+                        <option value="last-saved">Use Last Saved</option>
+                    </select>
+                </div>
+
+            </form>
+        </div>
+
         <!-- Links -->
         <div class="row">
             <div class="col-md-4">

@@ -1,4 +1,7 @@
 $(function() {
+
+// ---------- Initialization ---------- //
+
     // if not logged in, redirect to settings page
     if (!api.isAuthorized()) {
         showSettings();
@@ -8,19 +11,14 @@ $(function() {
     // initially load the boards from memory
     loadBoardsAndLists();
 
-    // get the current tab info and insert into the form
-    getCurrentTab(function(tab) {
-        $('.js-card-title').val(tab.title);
-        $('.js-card-description').text(tab.url);
-    });
+    // add default form values based on settings
+    initForms();
 
     // hit API to get boards and insert into the add form
     api.getBoards(loadBoardsAndLists);
 
 
-    // ------------------------------
-    // Click Events
-    // ------------------------------
+// ---------- Events ---------- //
 
     // open up Trello.com
     $('.js-trello-link').click(openTrello);
@@ -36,8 +34,8 @@ $(function() {
 
     // Add the new card
     $('.js-submit').click(function() {
-        var data = [];
-        $(".add-card-form").serializeArray().map(function(x){data[x.name] = x.value;});
+        var form = $(".add-card-form");
+        var data = serialize(form);
 
         // set the default dropdowns to what was selected
         storage.setDefaults(data['board'], data['list']);
@@ -140,4 +138,22 @@ function createOption(data, isSelected) {
     }
 
     return option;
+}
+
+/**
+ * initialize selected form inputs based on settings
+ */
+function initForms() {
+    var settings = storage.getSettings();
+
+    // get the current tab info and insert into the form
+    getCurrentTab(function(tab) {
+        if (settings.title == 'page') {
+            $('.js-card-title').val(tab.title);
+        }
+
+        if (settings.description == 'url') {
+            $('.js-card-description').text(tab.url);
+        }
+    });
 }

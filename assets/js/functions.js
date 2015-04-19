@@ -6,11 +6,31 @@ function openTrello() {
     chrome.tabs.create({ url: 'https://trello.com' });
 }
 
+function serialize(form) {
+    var formData = form.serializeArray();
+    var formObj  = {};
+
+    $.each(formData, function (index, value) {
+        if (value.value !== '') {
+            formObj[value.name] = value.value;
+        }
+    });
+
+    return formObj;
+}
+
 /**
  * local storage module for caching trello data
  */
 var storage = (function() {
     'use strict';
+
+    var defaultSettings = {
+        title: 'page',
+        description: 'url',
+        board: 'last-saved',
+        list: 'last-saved'
+    };
 
     /**
      * clear stored data
@@ -18,6 +38,7 @@ var storage = (function() {
     var clearData = function() {
         localStorage.removeItem('trello_boards');
         localStorage.removeItem('select_defaults');
+        localStorage.removeItem('settings');
     };
 
     /**
@@ -65,14 +86,34 @@ var storage = (function() {
         localStorage.setItem('trello_boards', JSON.stringify(boards));
     };
 
+    var getSettings = function() {
+        var settings = JSON.parse(localStorage.getItem('settings'));
+        if (!settings) {
+            // set and return the default configuration if not set
+            setSettings(defaultSettings);
+            return defaultSettings;
+        }
+
+        return settings;
+    };
+
+    var setSettings = function(settings) {
+        localStorage.setItem('settings', JSON.stringify(settings));
+    };
+
     /**
      * Public API
      */
     return {
         getBoards: getBoards,
         setBoards: setBoards,
+
         getDefaults: getDefaults,
         setDefaults: setDefaults,
+
+        getSettings: getSettings,
+        setSettings: setSettings,
+
         resetDefaults: resetDefaults,
         clearData: clearData
     }
