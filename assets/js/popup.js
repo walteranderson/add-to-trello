@@ -3,10 +3,7 @@ $(function() {
 // ---------- Initialization ---------- //
 
     // if not logged in, redirect to settings page
-    if (!api.isAuthorized()) {
-        showSettings();
-        return;
-    }
+    if (!api.isAuthorized()) return showSettings();
 
     // initially load the boards from memory
     loadBoardsAndLists();
@@ -34,11 +31,14 @@ $(function() {
 
     // Add the new card
     $('.js-submit').click(function() {
-        var form = $(".add-card-form");
-        var data = serialize(form);
+        var settings = storage.getSettings();
+        var form     = $(".add-card-form");
+        var data     = serialize(form);
 
-        // set the default dropdowns to what was selected
-        storage.setDefaults(data['board'], data['list']);
+        if (settings.boardList != 'choose') {
+            // set the default dropdowns to what was selected
+            storage.setDefaults(data['board'], data['list']);
+        }
 
         api.submitCard(data);
     });
@@ -56,9 +56,8 @@ function getCurrentTab(callback) {
     };
 
     chrome.tabs.query(queryInfo, function(tabs) {
-        var tab = tabs[0];
-
-        callback(tab);
+        // send the first tab through the callback
+        callback(tabs[0]);
     });
 }
 
@@ -68,12 +67,9 @@ function getCurrentTab(callback) {
 function initForms() {
     var settings = storage.getSettings();
 
-    if (settings.board) {
-        $('.js-boards option[value="'+ settings.board +'"]').prop('selected', true);
-    }
-
-    if (settings.list) {
+    if (settings.boardList == 'choose') {
         $('.js-lists option[value="'+ settings.list +'"]').prop('selected', true);
+        $('.js-boards option[value="'+ settings.board +'"]').prop('selected', true);
     }
 
     // get the current tab info and insert into the form

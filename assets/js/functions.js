@@ -174,14 +174,7 @@ var storage = (function() {
      * retrieve default options
      */
     var getDefaults = function() {
-        var defaults = JSON.parse(localStorage.getItem('select_defaults'));
-        var settings = getSettings();
-
-        // override with settings defaults
-        if (settings.board) defaults.board_id = settings.board;
-        if (settings.list) defaults.list_id  = settings.list;
-
-        return defaults;
+        return JSON.parse(localStorage.getItem('select_defaults'));
     };
 
     /**

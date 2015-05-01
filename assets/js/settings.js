@@ -15,7 +15,15 @@ $(function() {
     $('.js-settings-form').change(function() {
         var form = serialize($(this));
 
-        storage.setSettings(form);
+        storage.setSettings({
+            title: form.title,
+            description: form.description,
+            boardList: form.boardList
+        });
+
+        if (form.boardList == 'choose') {
+            storage.setDefaults(form.board, form.list);
+        }
     });
 
 
