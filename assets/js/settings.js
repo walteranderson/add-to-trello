@@ -5,6 +5,10 @@ $(function() {
     // handle authorization
     api.authorize(onSuccess, onError);
 
+    if ($('.js-board-list').val() == 'choose') {
+        showBoardsAndLists();
+    }
+
 
 // ---------- Events ---------- //
 
@@ -19,13 +23,14 @@ $(function() {
         var selected = $(this).val();
 
         if (selected == 'choose') {
-            $('.board-dropdown').removeClass('hidden');
-            $('.list-dropdown').removeClass('hidden');
+            showBoardsAndLists();
         } else {
-            $('.board-dropdown').addClass('hidden');
-            $('.list-dropdown').addClass('hidden');
+            hideBoardsAndLists();
         }
     });
+
+    // Change list dropdown when the user changes the board
+    $('.js-boards').change(changeList);
 
 });
 
@@ -58,4 +63,15 @@ function initSettings() {
     $.each(settings, function(key, value) {
         form.find('[name="'+ key +'"]').val(value);
     });
+}
+
+function showBoardsAndLists() {
+    $('.board-dropdown').removeClass('hidden');
+    $('.list-dropdown').removeClass('hidden');
+    loadBoardsAndLists();
+}
+
+function hideBoardsAndLists() {
+    $('.board-dropdown').addClass('hidden');
+    $('.list-dropdown').addClass('hidden');
 }
