@@ -68,6 +68,14 @@ function getCurrentTab(callback) {
 function initForms() {
     var settings = storage.getSettings();
 
+    if (settings.board) {
+        $('.js-boards option[value="'+ settings.board +'"]').prop('selected', true);
+    }
+
+    if (settings.list) {
+        $('.js-lists option[value="'+ settings.list +'"]').prop('selected', true);
+    }
+
     // get the current tab info and insert into the form
     getCurrentTab(function(tab) {
         if (settings.title == 'page') {

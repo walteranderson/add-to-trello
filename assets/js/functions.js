@@ -22,7 +22,7 @@ function serialize(form) {
  * pulls data from localStorage and inserts the board and list dropdowns
  *
  */
-function loadBoardsAndLists() {
+function loadBoardsAndLists(callback) {
     var orgs     = storage.getOrgs();
     var defaults = storage.getDefaults();
 
@@ -41,6 +41,8 @@ function loadBoardsAndLists() {
         // append the option group
         $('.js-boards').append(createOptionGroup(org, defaults));
     });
+
+    if (callback) callback();
 }
 
 /**
@@ -172,7 +174,14 @@ var storage = (function() {
      * retrieve default options
      */
     var getDefaults = function() {
-        return JSON.parse(localStorage.getItem('select_defaults'));
+        var defaults = JSON.parse(localStorage.getItem('select_defaults'));
+        var settings = getSettings();
+
+        // override with settings defaults
+        if (settings.board) defaults.board_id = settings.board;
+        if (settings.list) defaults.list_id  = settings.list;
+
+        return defaults;
     };
 
     /**
