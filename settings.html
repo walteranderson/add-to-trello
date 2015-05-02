@@ -17,7 +17,7 @@
     <div class="jumbotron logo-container">
         <div class="centered">
             <span class="pre-logo">Add to</span>
-            <img src="assets/images/trello-logo-large.png" class="logo">
+            <img class="img-responsive logo" src="assets/images/trello-logo-large.png">
         </div>
     </div>
 
@@ -34,8 +34,7 @@
             <div id="success" class="hidden">
                 <div class="success-body">
                     <div class="alert alert-success">
-                        Congratulations! You have successfully authorized
-                        Add to Trello
+                        You have successfully authorized Add to Trello
                     </div>
                 </div>
             </div>
@@ -50,48 +49,50 @@
 
         <!-- Settings -->
         <div id="settings" class="hidden row">
-            <div class="lead">Settings</div>
-            <form class="js-settings-form col-md-4">
-                <!-- Card Title -->
-                <div class="form-group">
-                    <label for="title">Card Title Default</label>
-                    <select class="form-control" name="title">
-                        <option value="empty">Leave Blank</option>
-                        <option value="page">Current Page Title</option>
-                    </select>
+            <div class="sub_header lead">Settings</div>
+            <form class="settings_form js-settings-form clearfix">
+                <div class="col-md-5">
+                    <!-- Card Title -->
+                    <div class="form-group">
+                        <label for="title">Card Title</label>
+                        <select class="form-control" name="title">
+                            <option value="empty">Leave Blank</option>
+                            <option value="page">Current Page Title</option>
+                        </select>
+                    </div>
+
+                    <!-- Card Description -->
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <select class="form-control" name="description">
+                            <option value="empty">Leave Blank</option>
+                            <option value="url">Current Page Url</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- Card Description -->
-                <div class="form-group">
-                    <label for="description">Description Default</label>
-                    <select class="form-control" name="description">
-                        <option value="empty">Leave Blank</option>
-                        <option value="url">Current Page Url</option>
-                    </select>
+                <div class="col-md-5 col-md-offset-2">
+                    <!-- Board & List Defaults -->
+                    <div class="form-group">
+                        <label for="boardList">Board &amp; List Defaults</label>
+                        <select class="form-control js-board-list" name="boardList">
+                            <option value="last-used">Last Used</option>
+                            <option value="choose">Choose Defaults</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group board-dropdown hidden">
+                        <label for="board">Boards</label>
+                        <select class="form-control js-boards" name="board">
+                        </select>
+                    </div>
+
+                    <div class="form-group list-dropdown hidden">
+                        <label for="list">Lists</label>
+                        <select class="form-control js-lists" name="list">
+                        </select>
+                    </div>
                 </div>
-
-                <!-- Board & List Defaults -->
-                <div class="form-group">
-                    <label for="boardList">Board &amp; List Defaults</label>
-                    <select class="form-control js-board-list" name="boardList">
-                        <option value="last-used">Last Used</option>
-                        <option value="choose">Choose Defaults</option>
-                    </select>
-                </div>
-
-                <div class="form-group board-dropdown hidden">
-                    <label for="board">Boards</label>
-                    <select class="form-control js-boards" name="board">
-                    </select>
-                </div>
-
-                <div class="form-group list-dropdown hidden">
-                    <label for="list">Lists</label>
-                    <select class="form-control js-lists" name="list">
-                    </select>
-                </div>
-
-
             </form>
         </div>
 
