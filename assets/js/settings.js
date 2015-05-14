@@ -123,7 +123,12 @@ function initSettings() {
 function showBoardsAndLists() {
     $('.board-dropdown').removeClass('hidden');
     $('.list-dropdown').removeClass('hidden');
+
+    // load from storage immediately if we have it
     loadBoardsAndLists();
+
+    // call the API to update our local storage
+    api.getOrgsAndBoards(loadBoardsAndLists);
 }
 
 function hideBoardsAndLists() {
