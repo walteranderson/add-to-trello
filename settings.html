@@ -7,6 +7,8 @@
 
     <!-- Scripts -->
     <script src="libs/jquery/dist/jquery.min.js"></script>
+    <script src="libs/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="libs/noty/js/noty/themes/bootstrap.js"></script>
     <script src="libs/trello_client.js"></script>
     <script src="assets/js/key.js"></script>
     <script src="assets/js/functions.js"></script>
@@ -51,7 +53,7 @@
         <div id="settings" class="hidden row">
             <div class="sub_header">Settings</div>
             <div class="sub_description">
-                Use these settings to adjust what is automatically pre-filled for each field.
+                Use these settings to adjust the fields in the popup window.
             </div>
             <form class="settings_form js-settings-form clearfix">
                 <div class="col-md-5">
@@ -100,23 +102,28 @@
 
                     <!-- Board Dropdown -->
                     <div class="form-group board-dropdown hidden">
-                        <label for="board">Boards</label>
+                        <label for="board">Board</label>
                         <select class="form-control js-boards" name="board">
                         </select>
                     </div>
 
                     <!-- List Dropdown -->
                     <div class="form-group list-dropdown hidden">
-                        <label for="list">Lists</label>
+                        <label for="list">List</label>
                         <select class="form-control js-lists" name="list">
                         </select>
                     </div>
+                </div>
+
+                <!-- Save Button -->
+                <div class="col-md-12">
+                    <button type="submit" class="btn green-button">Save</button>
                 </div>
             </form>
         </div>
 
         <!-- Links -->
-        <div class="row">
+        <div class="row links">
             <div class="col-md-4">
                 <h2 class="lead text-center">Leave a Review</h2>
 

@@ -13,22 +13,45 @@ $(function() {
 // ---------- Events ---------- //
 
     // save the settings
-    $('.js-settings-form').change(function() {
-        var form = serialize($(this));
+    $('.js-settings-form').submit(function(e) {
+        e.preventDefault();
 
-        storage.setSettings({
+        var form = serialize($(this));
+        var data = {
             title: form.title,
             description: form.description,
             boardList: form.boardList,
-            titleValue: form.titleValue,
-            descriptionValue: form.descriptionValue
-        });
+            titleValue: '',
+            descriptionValue: ''
+        };
 
+        // add defined title value if necessary
+        if (form.title == 'defined') {
+            data.titleValue = form.titleValue;
+        }
+
+        // add defined description value if necessary
+        if (form.description == 'defined') {
+            data.descriptionValue = form.descriptionValue;
+        }
+
+        // save main settings data
+        storage.setSettings(data);
+
+        // save board/list overrides
         if (form.boardList == 'choose') {
             storage.setDefaults(form.board, form.list);
         }
-    });
 
+        // notify the user
+        noty({
+            text: 'Save successful!',
+            layout: 'topLeft',
+            theme: 'bootstrapTheme',
+            type: 'success',
+            timeout: 2000
+        });
+    });
 
     // toggle the board/list override dropdowns
     $('.js-board-list').change(function() {
@@ -85,7 +108,15 @@ function initSettings() {
     var form     = $('.js-settings-form');
 
     $.each(settings, function(key, value) {
-        form.find('[name="'+ key +'"]').val(value);
+        var option = form.find('[name="'+ key +'"]');
+
+        // set the option's value
+        option.val(value);
+
+        // unhide the as-defined inputs
+        if (value == 'defined') {
+            option.siblings('input').removeClass('hidden');
+        }
     });
 }
 

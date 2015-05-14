@@ -7,8 +7,26 @@ body {
     color: #4d4d4d;
 }
 
+.green-button {
+    background: linear-gradient(to bottom,#70b500 0,#64a200 100%);
+    box-shadow: 0 1px 0 #4d4d4d;
+    color: #fff!important;
+    padding: 5px 20px;
+    line-height: 22px;
+    font-weight: bold;
+}
+
+.green-button:hover {
+    background: linear-gradient(to bottom,#64a200 0,#578c00 100%);
+}
+
 .container {
     max-width: 850px;
+}
+
+.links {
+    border-top: 1px solid #d6dadc;
+    margin-top: 30px;
 }
 
 .sub_header {
