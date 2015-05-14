@@ -12,10 +12,15 @@ body {
 }
 
 .sub_header {
+    font-size: 21px;
     border-bottom: 1px solid #d6dadc;
     padding: 8px 0;
     position: relative;
     font-weight: bold;
+}
+
+.sub_description {
+    margin: 8px 0 30px 0;
 }
 
 .logo-container {
@@ -53,4 +58,12 @@ body {
 
 .success-body {
     margin-top: 15px;
+}
+
+.value_input {
+    margin-top: 15px;
+}
+
+.form-group {
+    margin-bottom: 20px;
 }

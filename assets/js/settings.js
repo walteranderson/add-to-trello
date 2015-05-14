@@ -12,13 +12,16 @@ $(function() {
 
 // ---------- Events ---------- //
 
+    // save the settings
     $('.js-settings-form').change(function() {
         var form = serialize($(this));
 
         storage.setSettings({
             title: form.title,
             description: form.description,
-            boardList: form.boardList
+            boardList: form.boardList,
+            titleValue: form.titleValue,
+            descriptionValue: form.descriptionValue
         });
 
         if (form.boardList == 'choose') {
@@ -27,6 +30,7 @@ $(function() {
     });
 
 
+    // toggle the board/list override dropdowns
     $('.js-board-list').change(function() {
         var selected = $(this).val();
 
@@ -39,6 +43,18 @@ $(function() {
 
     // Change list dropdown when the user changes the board
     $('.js-boards').change(changeList);
+
+    // toggle the as-defined input box when we select it/unselect it
+    $('.js-defined-control').change(function() {
+        var input  = $(this).siblings('input');
+        var option = $(this).val();
+
+        if (option == 'defined') {
+            input.removeClass('hidden');
+        } else {
+            input.addClass('hidden');
+        }
+    });
 
 });
 

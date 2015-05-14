@@ -65,21 +65,27 @@ function getCurrentTab(callback) {
  * initialize selected form inputs based on settings
  */
 function initForms() {
-    var settings = storage.getSettings();
+    var settings    = storage.getSettings();
+    var title       = $('.js-card-title');
+    var description = $('.js-card-description');
+    var board       = $('.js-lists option[value="'+ settings.list +'"]');
+    var list        = $('.js-boards option[value="'+ settings.board +'"]');
 
     if (settings.boardList == 'choose') {
-        $('.js-lists option[value="'+ settings.list +'"]').prop('selected', true);
-        $('.js-boards option[value="'+ settings.board +'"]').prop('selected', true);
+        board.prop('selected', true);
+        list.prop('selected', true);
     }
 
-    // get the current tab info and insert into the form
-    getCurrentTab(function(tab) {
-        if (settings.title == 'page') {
-            $('.js-card-title').val(tab.title);
-        }
+    // use as-defined if set
+    if (settings.title == 'defined') title.val(settings.titleValue);
+    if (settings.description == 'defined') description.val(settings.descriptionValue);
 
-        if (settings.description == 'url') {
-            $('.js-card-description').text(tab.url);
-        }
-    });
+
+    // get the current tab info and insert into the form, if necessary
+    if (settings.title == 'page' || settings.description == 'url') {
+        getCurrentTab(function(tab) {
+            if (settings.title == 'page') title.val(tab.title);
+            if (settings.description == 'url') description.text(tab.url);
+        });
+    }
 }
