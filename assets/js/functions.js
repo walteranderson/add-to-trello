@@ -149,8 +149,21 @@ var storage = (function() {
      */
     var resetDefaults = function() {
         var orgs  = getOrgs();
-        var board = orgs.me.boards[0];
-        var list  = board.lists[0];
+        var board = {};
+        var list  = {};
+
+        if (orgs.me.boards.length) {
+            board = orgs.me.boards[0];
+
+            if (board.lists.length) {
+                list = board.lists[0];
+            } else {
+                list.id = 0;
+            }
+        } else {
+            board.id = 0;
+            list.id  = 0;
+        }
 
         localStorage.setItem('select_defaults', JSON.stringify({
             board_id: board.id,

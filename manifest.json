@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Add to Trello",
     "description": "Add cards to your Trello boards from your browser",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "browser_action": {
         "default_popup": "popup.html",
         "default_title": "Add Cards to Trello"
