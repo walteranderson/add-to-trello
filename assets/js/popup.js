@@ -30,7 +30,9 @@ $(function() {
     $('.js-boards').change(changeList);
 
     // Add the new card
-    $('.js-submit').click(function() {
+    $('.add-card-form').submit(function(e) {
+		e.preventDefault();
+		
         var settings = storage.getSettings();
         var form     = $(".add-card-form");
         var data     = serialize(form);
