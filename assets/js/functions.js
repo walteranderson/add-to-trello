@@ -279,7 +279,18 @@ var api = (function() {
             getBoards(function(boards) {
                 $.each(boards, function(key, board) {
                     // add board to either it's organization or the 'me' catchall
-                    orgList[board.idOrganization || 'me'].boards.push(board);
+                    var organization = orgList[board.idOrganization || 'me'];
+
+                    // make sure the organization we're trying to add
+                    // the board to exists
+                    if (organization !== undefined) {
+                        organization.boards.push(board);
+                    } else {
+                        // if the organization the board belongs to
+                        // wasn't added above for whatever reason,
+                        // add the board to the 'me' catchall
+                        orgList['me'].boards.push(board);
+                    }
                 });
 
                 storage.setOrgs(orgList);

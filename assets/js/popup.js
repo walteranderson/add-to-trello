@@ -31,8 +31,8 @@ $(function() {
 
     // Add the new card
     $('.add-card-form').submit(function(e) {
-		e.preventDefault();
-		
+        e.preventDefault();
+
         var settings = storage.getSettings();
         var form     = $(".add-card-form");
         var data     = serialize(form);
