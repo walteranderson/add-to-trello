@@ -87,6 +87,7 @@ var TrelloApi = (function() {
       name: data['card-title'],
       desc: data['card-description'],
       date: null,
+      pos: data['position'],
       idList: data['list'],
       urlSource: null
     }, function(success) {

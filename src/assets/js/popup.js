@@ -59,11 +59,14 @@ var Popup = {
     var description = $('.js-card-description');
     var board = $('.js-lists option[value="'+ settings.list +'"]');
     var list = $('.js-boards option[value="'+ settings.board +'"]');
+    var position = $('.js-positions option[value="'+ settings.position +'"]');
 
     if (settings.boardList == 'choose') {
         board.prop('selected', true);
         list.prop('selected', true);
     }
+
+    position.prop('selected', true);
 
     // use as-defined if set
     if (settings.title == 'defined') {

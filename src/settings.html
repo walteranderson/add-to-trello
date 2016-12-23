@@ -1,151 +1,159 @@
 <!doctype html>
 <html>
-<head>
-    <title></title>
-</head>
-<body id="settings">
+  <head>
+    <title>Add to Trello</title>
+  </head>
+  <body id="settings">
+
     <!-- Header -->
     <div class="jumbotron logo-container">
-        <div class="centered">
-            <span class="pre-logo">Add to</span>
-            <img class="img-responsive logo" src="assets/images/trello-logo-large.png">
-        </div>
+      <div class="centered">
+        <span class="pre-logo">Add to</span>
+        <img class="img-responsive logo" src="assets/images/trello-logo-large.png" alt="Trello Logo">
+      </div>
     </div>
 
     <div class="container">
-        <!-- Authentication Notifications -->
-        <div class="row">
-
-            <div id="auth" class="auth-loading">
-                <img src="assets/images/ajax-loader.gif" class="center-block"/>
-                <div class="text-center lead">Checking authorization</div>
-            </div>
-
-            <!-- Authorize Success -->
-            <div id="success" class="hidden">
-                <div class="success-body">
-                    <div class="alert alert-success">
-                        You have successfully authorized Add to Trello
-                    </div>
-                </div>
-            </div>
-
-            <!-- Authorize Error -->
-            <div id="error" class="hidden">
-                <h2>Uh oh</h2>
-                It looks like something went wrong when trying to authorize
-                with Trello. Check your internet connection and try again.
-            </div>
+      <!-- Authentication Notifications -->
+      <div class="row">
+        <div id="auth" class="auth-loading">
+          <img src="assets/images/ajax-loader.gif" class="center-block" alt="Loading"/>
+          <div class="text-center lead">Checking authorization</div>
         </div>
 
-        <!-- Settings -->
-        <div id="settings-form" class="hidden row">
-            <div class="sub_header">Settings</div>
-            <div class="sub_description">
-                Use these settings to adjust the fields in the popup window.
+        <!-- Authorize Success -->
+        <div id="success" class="hidden">
+          <div class="success-body">
+            <div class="alert alert-success">
+              You have successfully authorized Add to Trello
             </div>
-            <form class="settings_form js-settings-form clearfix">
-                <div class="col-md-5">
-                    <!-- Card Title -->
-                    <div class="form-group">
-                        <label for="title">Card Title</label>
-                        <select class="form-control js-title js-defined-control" name="title">
-                            <option value="empty">Leave Blank</option>
-                            <option value="page">Current Page Title</option>
-                            <option value="defined">As Defined</option>
-                        </select>
+          </div>
+        </div>
 
-                        <!-- As Defined Input -->
-                        <input class="value_input form-control hidden"
-                               type="text"
-                               name="titleValue"
-                               placeholder="Card Title">
-                    </div>
+        <!-- Authorize Error -->
+        <div id="error" class="hidden">
+          <h2>Uh oh</h2>
+          It looks like something went wrong when trying to authorize
+          with Trello. Check your internet connection and try again.
+        </div>
+      </div>
 
-                    <!-- Card Description -->
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <select class="form-control js-description js-defined-control" name="description">
-                            <option value="empty">Leave Blank</option>
-                            <option value="url">Current Page Url</option>
-                            <option value="defined">As Defined</option>
-                        </select>
+      <!-- Settings -->
+      <div id="settings-form" class="hidden row">
+        <div class="sub_header">Settings</div>
+        <div class="sub_description">
+          Use these settings to adjust the fields in the popup window.
+        </div>
 
-                        <!-- As Defined Input -->
-                        <input class="value_input form-control hidden"
-                               type="text"
-                               name="descriptionValue"
-                               placeholder="Card Description">
-                    </div>
-                </div>
+        <form class="settings_form js-settings-form clearfix">
+          <div class="col-md-5">
 
-                <div class="col-md-5 col-md-offset-2">
-                    <!-- Board & List Defaults -->
-                    <div class="form-group">
-                        <label for="boardList">Board &amp; List Overrides</label>
-                        <select class="form-control js-board-list" name="boardList">
-                            <option value="last-used">Last Used</option>
-                            <option value="choose">Choose</option>
-                        </select>
-                    </div>
+            <!-- Card Title -->
+            <div class="form-group">
+              <label for="title">Card Title</label>
+              <select class="form-control js-title js-defined-control" name="title">
+                <option value="empty">Leave Blank</option>
+                <option value="page">Current Page Title</option>
+                <option value="defined">As Defined</option>
+              </select>
 
-                    <!-- Board Dropdown -->
-                    <div class="form-group board-dropdown hidden">
-                        <label for="board">Board</label>
-                        <select class="form-control js-boards" name="board">
-                        </select>
-                    </div>
+              <!-- As Defined Input -->
+              <input class="value_input form-control hidden"
+                     type="text"
+                     name="titleValue"
+                     placeholder="Card Title">
+            </div>
 
-                    <!-- List Dropdown -->
-                    <div class="form-group list-dropdown hidden">
-                        <label for="list">List</label>
-                        <select class="form-control js-lists" name="list">
-                        </select>
-                    </div>
-                </div>
+            <!-- Card Description -->
+            <div class="form-group">
+              <label for="description">Description</label>
+              <select class="form-control js-description js-defined-control" name="description">
+                <option value="empty">Leave Blank</option>
+                <option value="url">Current Page Url</option>
+                <option value="defined">As Defined</option>
+              </select>
 
-                <!-- Save Button -->
-                <div class="col-md-12">
-                    <button type="submit" class="btn green-button">Save</button>
-                </div>
+              <!-- As Defined Input -->
+              <input class="value_input form-control hidden"
+                     type="text"
+                     name="descriptionValue"
+                     placeholder="Card Description">
+            </div>
+          </div>
+
+          <div class="col-md-5 col-md-offset-2">
+            <!-- Board & List Defaults -->
+            <div class="form-group">
+              <label for="boardList">Board &amp; List Overrides</label>
+              <select class="form-control js-board-list" name="boardList">
+                <option value="last-used">Last Used</option>
+                <option value="choose">Choose</option>
+              </select>
+            </div>
+
+            <!-- Board Dropdown -->
+            <div class="form-group board-dropdown hidden">
+              <label for="board">Board</label>
+              <select class="form-control js-boards" name="board">
+              </select>
+            </div>
+
+            <!-- List Dropdown -->
+            <div class="form-group list-dropdown hidden">
+              <label for="list">List</label>
+              <select class="form-control js-lists" name="list">
+              </select>
+            </div>
+
+            <!-- Position Dropdown -->
+            <div class="form-group position-dropdown">
+              <label for="position">Position</label>
+              <select class="form-control js-positions" name="position">
+                <option value="bottom">Bottom</option>
+                <option value="top">Top</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Save Button -->
+          <div class="col-md-12">
+            <button type="submit" class="btn green-button">Save</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Links -->
+      <div class="row links">
+        <div class="col-md-4">
+          <h2 class="lead text-center">Leave a Review</h2>
+          <div class="text-center">
+            <a href="https://chrome.google.com/webstore/detail/engmocckoohpopiacajolojeobefbcec/?hl=en">Review in the Chrome Webstore</a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h2 class="lead text-center">Have a Suggestion?</h2>
+          <div class="text-center">
+            Have any suggestions, or just like the chrome extension?
+            <a href="mailto:walteranderson19@gmail.com">Send me an email</a>.
+          </div>
+          <div class="paypal text-center">
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+              <input type="hidden" name="cmd" value="_s-xclick">
+              <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+              <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
             </form>
+          </div>
         </div>
-
-        <!-- Links -->
-        <div class="row links">
-            <div class="col-md-4">
-                <h2 class="lead text-center">Leave a Review</h2>
-
-                <div class="text-center">
-                    <a href="https://chrome.google.com/webstore/detail/engmocckoohpopiacajolojeobefbcec/?hl=en">Review in the Chrome Webstore</a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <h2 class="lead text-center">Have a Suggestion?</h2>
-
-                <div class="text-center">
-                    Have any suggestions, or just like the chrome extension?
-                    <a href="mailto:walteranderson19@gmail.com">Send me an email</a>.
-                </div>
-                <div class="paypal text-center">
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
-                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <h2 class="lead text-center">Follow on Github</h2>
-
-                <div class="text-center">
-                    Submit issues, pull requests, or just follow the development
-                    on <a href="https://github.com/walteranderson/add-to-trello">Github</a>.
-                </div>
-            </div>
+        <div class="col-md-4">
+          <h2 class="lead text-center">Follow on Github</h2>
+          <div class="text-center">
+            Submit issues, pull requests, or just follow the development
+            on <a href="https://github.com/walteranderson/add-to-trello">Github</a>.
+          </div>
         </div>
+      </div>
+
     </div>
-</body>
+  </body>
 </html>
-
