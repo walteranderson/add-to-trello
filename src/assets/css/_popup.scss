@@ -1,0 +1,31 @@
+#popup {
+  min-width: 320px;
+  margin: 8px;
+  background-color: #f0f0f0 !important;
+
+  .options-list {
+    background-color: #f0f0f0;
+  }
+
+  .settings-link {
+    float: left;
+  }
+
+  .logout-link,
+  .clear-button {
+    float: right;
+  }
+
+  .trello-link {
+    height: 30px;
+  }
+
+  .trello-logo {
+    cursor: pointer;
+    width: 75px;
+  }
+
+  .add-card-form {
+    margin-bottom: 20px;
+  }
+}

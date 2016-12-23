@@ -1,95 +1,78 @@
-input, textarea, select {
-    box-shadow: 0 1px 2px rgba(0,0,0,.23)!important;
-    border: 0 !important;
-}
+#settings {
+  color: #4d4d4d;
 
-body {
-    color: #4d4d4d;
-}
-
-.paypal {
+  .paypal {
     margin-top: 15px;
-}
+  }
 
-.paypal input {
+  .paypal input {
     box-shadow: none !important;
-}
+  }
 
-.green-button {
-    background: linear-gradient(to bottom,#70b500 0,#64a200 100%);
-    box-shadow: 0 1px 0 #4d4d4d;
-    color: #fff!important;
-    padding: 5px 20px;
-    line-height: 22px;
-    font-weight: bold;
-}
-
-.green-button:hover {
-    background: linear-gradient(to bottom,#64a200 0,#578c00 100%);
-}
-
-.container {
+  .container {
     max-width: 850px;
-}
+  }
 
-.links {
+  .links {
     border-top: 1px solid #d6dadc;
     margin-top: 30px;
-}
+  }
 
-.sub_header {
+  .sub_header {
     font-size: 21px;
     border-bottom: 1px solid #d6dadc;
     padding: 8px 0;
     position: relative;
     font-weight: bold;
-}
+  }
 
-.sub_description {
+  .sub_description {
     margin: 8px 0 30px 0;
-}
+  }
 
-.logo-container {
+  .logo-container {
     background-color: #edeff0;
     border-bottom: 1px solid #d6dadc;
-}
+  }
 
-.logo-container .centered {
+  .logo-container .centered {
     float: none;
     margin: 0 auto;
     width: 50%;
     margin-top: 20px;
     text-align: center;
-}
+  }
 
-.pre-logo {
+  .pre-logo {
     font-size: 40px;
     line-height: 1;
     font-weight: 200;
     margin: -13px;
-}
+  }
 
-.logo {
+  .logo {
     width: 350px;
     display: inline;
-}
+  }
 
-.auth-loading {
+  .auth-loading {
     color: black;
-}
+  }
 
-.auth-loading img {
+  .auth-loading img {
     margin-bottom: 15px;
-}
+  }
 
-.success-body {
+  .success-body {
     margin-top: 15px;
-}
+  }
 
-.value_input {
+  .value_input {
     margin-top: 15px;
-}
+  }
 
-.form-group {
+  .form-group {
     margin-bottom: 20px;
+  }
 }
+
