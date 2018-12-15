@@ -1,91 +1,69 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path')
+const webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const DotenvPlugin = require('webpack-dotenv-plugin')
 
-var isProd = process.env.NODE_ENV === 'production' ? true : false;
+// TODO: add this in for production builds
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-var config = {
-  debug: true,
-  devtool: 'cheap-module-source-map',
-  entry: [
-    './src/assets/js/index.js',
-    './src/assets/css/index.scss'
-  ],
-
-  output: {
-    path: './build',
-    filename: 'assets/js/bundle.js'
-  },
-
-  module: {
-    loaders: [
-      {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css!sass')
-      },
-      {test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff'},
-      {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
-      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
-      {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'}
-    ]
-  },
-
-  resolve: {
-    extensions: ['', '.js'],
-    alias: {
-      'bootstrap': path.resolve(__dirname, 'node_modules', 'bootstrap-sass', 'assets'),
-    }
-  },
-
-  plugins: [
-
-    // extract css into separate file
-    new ExtractTextPlugin('assets/css/bundle.css'),
-
-    // copy the chrome extension manifest
-    new CopyWebpackPlugin([
-      { from: './src/manifest.json', to: 'manifest.json' }
-    ]),
-
-    // copy the images
-    new CopyWebpackPlugin([
-      { from: './src/assets/images', to: 'assets/images' }
-    ]),
-
-    // copy the popup and settings html files
-    new HtmlWebpackPlugin({
-      filename: 'popup.html',
-      template: './src/popup.html',
-    }),
-
-    new HtmlWebpackPlugin({
-      filename: 'settings.html',
-      template: './src/settings.html',
-    })
-  ]
-};
-
-if (isProd) {
-  config.debug = false;
-
-  // set production NODE_ENV
-  config.plugins.push(
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    })
-  );
-
-  // minify javascript
-  config.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false },
-      output: { comments: false }
-    })
-  );
+if (!process.env.TARGET) {
+  throw new Error('Please specify env variable TARGET: "chrome", or "firefox"')
 }
 
-module.exports = config;
+if (!(process.env.TARGET === 'chrome' || process.env.TARGET === 'firefox')) {
+  throw new Error('TARGET can only be "chrome" or "firefox"')
+}
+
+console.info('Building for target: ' + process.env.TARGET)
+
+module.exports = {
+  devtool: 'source-map',
+  mode: 'development',
+  context: path.resolve(__dirname, 'src'),
+  entry: {
+    settings: './ui/settings.js',
+    popup: './ui/popup.js'
+  },
+  output: {
+    path: path.resolve(__dirname, 'build', process.env.TARGET),
+    filename: '[name].dist.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            '@babel/preset-env',
+            '@babel/preset-react'
+          ],
+          plugins: [
+           '@babel/plugin-proposal-class-properties'
+          ]
+        }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      }
+    ]
+  },
+  plugins: [
+    new DotenvPlugin({
+      sample: './env.example',
+      path: './.env'
+    }),
+
+    new CopyWebpackPlugin([
+      { from: './static/', to: './' },
+      { from: `./manifest.${process.env.TARGET}.json`, to: './manifest.json' },
+      { from: '../node_modules/webextension-polyfill/dist/browser-polyfill.js', to: './vendor/browser-polyfill.js' },
+      { from: '../node_modules/jquery/dist/jquery.slim.min.js', to: './vendor/jquery.js' },
+
+      { from: '../node_modules/semantic-ui-css/semantic.min.css', to: './vendor/semantic-ui.css' },
+      { from: '../node_modules/semantic-ui-css/themes/', to: './vendor/themes/' },
+    ])
+  ]
+}
